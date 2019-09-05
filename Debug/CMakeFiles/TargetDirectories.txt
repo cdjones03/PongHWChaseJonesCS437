@@ -1,0 +1,4 @@
+/Users/chasejones/pong/Debug/CMakeFiles/rebuild_cache.dir
+/Users/chasejones/pong/Debug/CMakeFiles/edit_cache.dir
+/Users/chasejones/pong/Debug/CMakeFiles/pong.dir
+/Users/chasejones/pong/Debug/CMakeFiles/helloworld.dir

@@ -10,11 +10,7 @@
 SFML/Graphics.hpp
 -
 
-/Users/chasejones/pong/bin/pong.cpp
-SFML/Graphics.hpp
--
-iostream
--
+/Users/chasejones/pong/src/paddle.cpp
 paddle.hpp
 -
 

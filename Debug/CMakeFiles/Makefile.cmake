@@ -52,4 +52,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/pong.dir/DependInfo.cmake"
   "CMakeFiles/helloworld.dir/DependInfo.cmake"
+  "CMakeFiles/pong_core.dir/DependInfo.cmake"
   )

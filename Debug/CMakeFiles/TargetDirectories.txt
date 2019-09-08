@@ -2,3 +2,4 @@
 /Users/chasejones/pong/Debug/CMakeFiles/edit_cache.dir
 /Users/chasejones/pong/Debug/CMakeFiles/pong.dir
 /Users/chasejones/pong/Debug/CMakeFiles/helloworld.dir
+/Users/chasejones/pong/Debug/CMakeFiles/pong_core.dir

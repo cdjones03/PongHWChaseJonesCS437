@@ -6,3 +6,7 @@
 
 #IncludeRegexTransform: 
 
+/Users/chasejones/pong/bin/helloworld.cpp
+SFML/Graphics.hpp
+-
+

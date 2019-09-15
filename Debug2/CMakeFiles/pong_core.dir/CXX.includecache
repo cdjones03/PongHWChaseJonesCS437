@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/AIView.hpp
+
+../include/HumanView.hpp
+
+../include/Logic.hpp
+paddle.hpp
+-
+
+../include/paddle.hpp
+SFML/Graphics.hpp
+-
+
+/Users/chasejones/pong/src/AIView.cpp
+SFML/Graphics.hpp
+-
+Logic.hpp
+-
+AIView.hpp
+-
+
+/Users/chasejones/pong/src/HumanView.cpp
+SFML/Graphics.hpp
+-
+Logic.hpp
+-
+HumanView.hpp
+-
+

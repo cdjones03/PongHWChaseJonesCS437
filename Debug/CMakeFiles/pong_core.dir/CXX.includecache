@@ -6,11 +6,21 @@
 
 #IncludeRegexTransform: 
 
+../include/AIView.hpp
+
+../include/Logic.hpp
+paddle.hpp
+-
+
 ../include/paddle.hpp
 SFML/Graphics.hpp
 -
 
-/Users/chasejones/pong/src/paddle.cpp
-paddle.hpp
+/Users/chasejones/pong/src/AIView.cpp
+SFML/Graphics.hpp
+-
+Logic.hpp
+-
+AIView.hpp
 -
 

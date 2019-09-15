@@ -1,43 +1,23 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <paddle.hpp>
-
-//getPosition() - returns top left corner
+#include <Logic.hpp>
+#include <AIView.hpp>
+#include <HumanView.hpp>
 
 using namespace std;
 
 const int FPS = 60;
 const float frame = 1000/FPS;
-const int padSpeed = 5;
 
-void init(Paddle &pad, sf::CircleShape &circle) {
-pad.setSize(20, 100);
-pad.setPosition(700, 300);
-pad.setColor(sf::Color::White);
-circle.setRadius(10);
-circle.setPosition(500, 100);
-}
-
-void update(int &time, Paddle &pad, sf::CircleShape &circle, int &x, int &y, int &dx, int &dy) {
-  circle.move(x,y);
-  dx = (circle.getPosition().x + 2*circle.getRadius()) - pad.getPosition().x;
-  dy = (circle.getPosition().y + 2*circle.getRadius()) - (pad.getPosition().y + pad.getHeight());
-  //cout << "y " << circle.getPosition().y << " dy " << dy << " height " << pad.getHeight() << endl;
-  //cout << "x " << circle.getPosition().x << " dx " << dx << endl;
-  //cout << "pad x" << pad.getPosition().x << " pad y " << pad.getPosition().y << endl;
-  if ((dx > 0) && (dx < 20) && (dy > (pad.getHeight()*-1)) && (dy < 0)){
-    cout << "collide" << endl;
-    x *= -1;
-  }
-}
-
-void scored(int scoreNum, sf::Text scoreText){
+void scored(int &scoreNum, sf::Text &scoreText, Logic thisLogic){
   scoreNum+=1;
   scoreText.setString(std::to_string(scoreNum));
+  thisLogic.reflectBallX();
 }
 
-void reset(sf::CircleShape ball){
-  ball.setPosition(500,100);
+void reset(sf::CircleShape &circle){
+  circle.setPosition(500,100);
 }
 
 int main(int argc, char** argv)
@@ -47,19 +27,20 @@ int main(int argc, char** argv)
   App.setFramerateLimit(60);
   //App.setKeyRepeatEnabled(false);
 
-  Paddle paddle;
-  sf::CircleShape ball;
-  int deltaMs = 0;
-  int diffX;
-  int diffY;
-  int ballSpeedX = 2;
-  int ballSpeedY = 2;
-  init(paddle, ball);
+
   int leftScore;
   int rightScore;
   sf::Text leftScoreText;
   sf::Text rightScoreText;
   sf::Font font;
+
+  int deltaMs = 0;
+
+  Logic logic;
+  logic.init();
+
+  AIView aiview;
+  HumanView humanview;
 
   //font.loadFromFile("~/Pong/Arial.ttf");
   if(!font.loadFromFile("../Arial.ttf")){
@@ -95,8 +76,6 @@ int main(int argc, char** argv)
   lines[6].color = sf::Color::Black;
 */
 
-
-
   sf::Clock clock;
 
   // start main loop
@@ -113,18 +92,22 @@ int main(int argc, char** argv)
         App.close();
       }
 
-
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-      paddle.move(0, -padSpeed);
+      humanview.moveUp(logic);
    }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-      paddle.move(0, padSpeed);}
+      humanview.moveDown(logic);
+    }
    }
 
+   App.clear(sf::Color::Black);
+   logic.update();
+   aiview.update(App, logic);
+   humanview.update(App, logic);
+
     // clear screen and fill with blue
-    App.clear(sf::Color::Black);
-    App.draw(paddle.getRect());
-    App.draw(ball);
+
+    App.draw(logic.getBall());
     App.draw(leftScoreText);
     App.draw(rightScoreText);
     //App.draw(lines);
@@ -132,19 +115,17 @@ int main(int argc, char** argv)
     // display
     App.display();
 
-    update(deltaMs, paddle, ball, ballSpeedX, ballSpeedY, diffX, diffY);
-
-    if(ball.getPosition().x > 800){
-      scored(leftScore, leftScoreText);
-      reset(ball);
+    if(logic.getBallPosition().x > 800){
+      scored(leftScore, leftScoreText, logic);
+      logic.reset();
     }
-    else if(ball.getPosition().x < 0){
+    else if(logic.getBallPosition().x < 0){
       cout << "hello" << endl;
-      scored(rightScore, rightScoreText);
-      reset(ball);
+      scored(rightScore, rightScoreText, logic);
+      logic.reset();
     }
-    if(ball.getPosition().y > 600 || ball.getPosition().y < 0){
-      ballSpeedY *= -1;
+    if((logic.getBallPosition().y + logic.getBallRadius()*2 > 600) || logic.getBallPosition().y < 0){
+      logic.reflectBallY();
     }
   }
 
